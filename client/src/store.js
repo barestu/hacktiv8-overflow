@@ -4,7 +4,8 @@ import axios from 'axios'
 import jwt from 'jsonwebtoken'
 import swal from 'sweetalert'
 
-const baseUrl = 'http://localhost:3000'
+// const baseUrl = 'http://localhost:3000'
+const baseUrl = 'http://35.187.249.89'
 
 Vue.use(Vuex)
 
