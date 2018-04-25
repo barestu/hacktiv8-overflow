@@ -71,7 +71,7 @@ module.exports = {
       .then(response => {
         res.status(200).send({
           message: 'Show All user',
-          data: response
+          users: response
         })
       })
       .catch(error => {
@@ -89,7 +89,7 @@ module.exports = {
       .then(response => {
         res.status(200).send({
           message: 'Show user',
-          data: response
+          user: response
         })
       })
       .catch(error => {

@@ -15,9 +15,13 @@ let questionSchema = new Schema ({
     ref: 'User',
     required: [true, 'required']
   },
-  voter: [{
+  voters: [{
     type: Schema.Types.ObjectId,
     ref: 'User'
+  }],
+  answers: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Answer'
   }]
 },{
   timestamps: true

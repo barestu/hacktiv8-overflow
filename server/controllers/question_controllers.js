@@ -1,5 +1,6 @@
 const User = require('../models/User')
 const Question = require('../models/Question')
+const Answer = require('../models/Answer')
 const jwt = require('jsonwebtoken')
 const secret = process.env.SECRET
 
@@ -7,10 +8,16 @@ module.exports = {
   findAll: (req, res) => {
     Question.find()
       .populate('poster', ['_id', 'username', 'email'])
+      .populate({
+        path: 'answers',
+        populate: [{
+          path: 'poster'
+        }]
+      })
       .then(response => {
         res.status(200).send({
           message: 'Show all question',
-          data: response
+          questions: response
         })
       })
       .catch(error => {
@@ -26,10 +33,16 @@ module.exports = {
       _id: req.params.id
     })
       .populate('poster', ['_id', 'username', 'email'])
+      .populate({
+        path: 'answers',
+        populate: [{
+          path: 'poster'
+        }]
+      })
       .then(response => {
         res.status(200).send({
           message: 'Show post data',
-          data: response
+          question: response
         })
       })
       .catch(error => {
@@ -53,7 +66,7 @@ module.exports = {
       .then(response => {
         res.status(201).send({
           message: 'Post question success',
-          data: newQuestion
+          question: newQuestion
         })
       })
       .catch(error => {
@@ -74,7 +87,7 @@ module.exports = {
       .then(response => {
         res.status(201).send({
           message: 'Update post success',
-          data: response
+          question: response
         })
       })
       .catch(error => {
@@ -92,12 +105,12 @@ module.exports = {
     Question.findOneAndUpdate({
       _id: req.params.id
     }, {
-      $addToSet: { voter: decoded.id }
+      $addToSet: { voters: decoded.id }
     })
       .then(response => {
         res.status(201).send({
           message: 'Upvote post success',
-          data: response
+          question: response
         })
       })
       .catch(error => {
@@ -115,12 +128,12 @@ module.exports = {
     Question.findOneAndUpdate({
       _id: req.params.id
     }, {
-      $pull: { voter: decoded.id }
+      $pull: { voters: decoded.id }
     })
       .then(response => {
         res.status(201).send({
           message: 'Downvote post success',
-          data: response
+          question: response
         })
       })
       .catch(error => {
@@ -136,10 +149,21 @@ module.exports = {
       _id: req.params.id
     })
       .then(response => {
-        res.status(200).send({
-          message: 'Delete post success',
-          data: response
+        Answer.remove({
+          question: req.params.id
         })
+          .then(response => {
+            res.status(200).send({
+              message: 'Delete post success',
+              data: response
+            })
+          })
+          .catch(error => {
+            res.status(400).send({
+              message: 'Delete post failed',
+              error: error.message
+            })
+          })
       })
       .catch(error => {
         res.status(400).send({
