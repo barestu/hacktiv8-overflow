@@ -129,7 +129,6 @@ export default new Vuex.Store({
 
     addQuestions: ({ commit, dispatch }, question) => {
       let token = localStorage.getItem('token')
-      console.log('here', question)
 
       axios.post(`${baseUrl}/api/question/add`, question, {
         headers: { token }
@@ -143,8 +142,19 @@ export default new Vuex.Store({
         })
     },
 
-    updateQuestions: ({ commit, dispatch }, question) => {
+    updateQuestions: ({ commit, dispatch }, data) => {
+      let token = localStorage.getItem('token')
 
+      axios.put(`${baseUrl}/api/question/update/${data.questionId}`, data.updateData, {
+        headers: { token }
+      })
+        .then(response => {
+          dispatch('getOneQuestion', data.questionId)
+          swal('Update question success!', ``, 'success')
+        })
+        .catch(error => {
+          console.log('update data failed', error.message)
+        })
     },
 
     deleteQuestions: ({ commit, dispatch }, id) => {

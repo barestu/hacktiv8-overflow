@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div  id="app">
     <!-- Navbar -->
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-1 bg-white border-bottom box-shadow">
       <h5 class="my-0 mr-md-auto font-weight-bold text-primary">
@@ -20,7 +20,6 @@
         <button @click="logout" class="btn btn-outline-dark btn-square m-1">Logout</button>
       </div>
     </div>
-
     <!-- Modal Register-->
     <div class="modal fade" id="modalRegister" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
@@ -37,8 +36,8 @@
         </div>
       </div>
     </div>
-
-    <div class="container pt-4">
+    <!-- Body -->
+    <div class="container py-5">
       <div class="row">
         <!-- Content -->
         <div class="col-md-8 col-sm-12">
