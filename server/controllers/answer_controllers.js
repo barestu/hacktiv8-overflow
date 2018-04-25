@@ -12,7 +12,7 @@ module.exports = {
       .then(response => {
         res.status(200).send({
           message: 'Show all answer',
-          data: response
+          answers: response
         })
       })
       .catch(error => {
@@ -32,7 +32,7 @@ module.exports = {
       .then(response => {
         res.status(200).send({
           message: 'Show post data',
-          data: response
+          answer: response
         })
       })
       .catch(error => {
@@ -53,15 +53,28 @@ module.exports = {
     })
 
     newAnswer.save()
-      .then(response => {
-        res.status(201).send({
-          message: 'Post answer success',
-          data: newAnswer
+      .then(addResponse => {
+        Question.findOneAndUpdate({
+          _id: req.body.question_id
+        }, {
+          $push: { answers: newAnswer._id }
         })
+          .then(updateResponse => {
+            res.status(201).send({
+              message: 'Post answer success',
+              answer: addResponse
+            })
+          })
+          .catch(error => {
+            res.status(400).send({
+              message: 'Post answer failed',
+              error: error.message
+            })
+          })
       })
       .catch(error => {
         res.status(400).send({
-          message: 'Post anser failed',
+          message: 'Post answer failed',
           error: error.message
         })
       })
@@ -74,12 +87,12 @@ module.exports = {
     Answer.findOneAndUpdate({
       _id: req.params.id
     }, {
-      $addToSet: { voter: decoded.id }
+      $addToSet: { voters: decoded.id }
     })
       .then(response => {
         res.status(201).send({
           message: 'Upvote post success',
-          data: response
+          answer: response
         })
       })
       .catch(error => {
@@ -97,12 +110,12 @@ module.exports = {
     Answer.findOneAndUpdate({
       _id: req.params.id
     }, {
-      $pull: { voter: decoded.id }
+      $pull: { voters: decoded.id }
     })
       .then(response => {
         res.status(201).send({
           message: 'Downvote post success',
-          data: response
+          answer: response
         })
       })
       .catch(error => {
@@ -118,10 +131,23 @@ module.exports = {
       _id: req.params.id
     })
       .then(response => {
-        res.status(200).send({
-          message: 'Delete post success',
-          data: response
+        Question.findOneAndUpdate({
+          _id: req.body.question_id
+        }, {
+          $pull: { answers: req.params.id }
         })
+          .then(response => {
+            res.status(201).send({
+              message: 'Delete post success',
+              data: response
+            })
+          })
+          .catch(error => {
+            res.status(400).send({
+              message: 'Delete post failed',
+              error: error.message
+            })
+          })
       })
       .catch(error => {
         res.status(400).send({

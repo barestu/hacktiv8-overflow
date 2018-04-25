@@ -16,7 +16,7 @@ let answerSchema = new Schema ({
     ref: 'User',
     required: [true, 'required']
   },
-  voter: [{
+  voters: [{
     type: Schema.Types.ObjectId,
     ref: 'User'
   }]
