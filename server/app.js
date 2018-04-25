@@ -11,6 +11,7 @@ const db_pass = process.env.DB_PASS
 const userRoutes = require('./routers/users')
 const questionRoutes = require('./routers/questions')
 const answerRoutes = require('./routers/answers')
+const sendEmailRoutes = require('./routers/sendEmails')
 
 mongoose.connect(`mongodb://${db_user}:${db_pass}@ds157667.mlab.com:57667/h8-overflow`)
 const db = mongoose.connection
@@ -31,6 +32,7 @@ app.get('/', (req, res) => {
 app.use('/api/user', userRoutes)
 app.use('/api/question', questionRoutes)
 app.use('/api/answer', answerRoutes)
+app.use('/api/send-email', sendEmailRoutes)
 
 app.listen(port, function() {
   console.log('Listening on port', port)

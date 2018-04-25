@@ -54,6 +54,15 @@
               Ask Question
             </button>
           </div>
+          <div v-else>
+            <div class="alert alert-warning mt-2 mx-5" role="alert">
+              <h4 class="alert-heading">Welcome!</h4>
+              <hr>
+              <p>Hacktiv8 Overflow is the 2nd largest online community for programmers to learn, share their knowledge and build their careers.</p>
+              <p class="mb-0">You need to register and login first so you can ask question or share your experience with the others here, enjoy!</p>
+              <hr>
+            </div>
+          </div>
         </div>
 
         <!-- Modal Add Question -->
