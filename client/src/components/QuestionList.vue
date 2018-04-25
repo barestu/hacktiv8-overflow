@@ -29,7 +29,7 @@
         <div>{{ dateFormat(question.createdAt) }}</div>
         <a href="#" @click.prevent="deleteQuestionEvent(question._id)" class="px-1"
           data-toggle="tooltip" data-placement="bottom"
-          title="Delete this answer?">
+          title="Delete this answer?" v-if="user.role === 'admin'">
           <span class="fa fa-trash"></span>
         </a>
       </div>
@@ -73,7 +73,8 @@ export default {
   },
   computed: {
     ...mapState([
-      'questions'
+      'questions',
+      'user'
     ])
   }
 }
